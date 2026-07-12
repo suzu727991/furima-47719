@@ -20,3 +20,4 @@ const calculateProfit = () => {
 };
 
 document.addEventListener("turbo:load", calculateProfit);
+document.addEventListener("turbo:render", calculateProfit);
