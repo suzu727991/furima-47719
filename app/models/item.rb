@@ -2,6 +2,7 @@ class Item < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
 
   belongs_to :user
+  has_one :order
   belongs_to_active_hash :category
   belongs_to_active_hash :sales_status
   belongs_to_active_hash :shipping_fee_status
@@ -19,4 +20,9 @@ class Item < ApplicationRecord
 
   validates :image, :name, :info, presence: true
   validates :price, numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999, only_integer: true }
+
+  # 購入レコードが存在する＝売却済み
+  def sold_out?
+    order.present?
+  end
 end
