@@ -2,6 +2,7 @@
 
 pin "application"
 pin "item_price"
+pin "card"
 pin "@hotwired/turbo-rails", to: "turbo.min.js"
 pin "@hotwired/stimulus", to: "stimulus.min.js"
 pin "@hotwired/stimulus-loading", to: "stimulus-loading.js"
