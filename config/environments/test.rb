@@ -37,6 +37,9 @@ Rails.application.configure do
   # Store uploaded files on the local file system in a temporary directory.
   config.active_storage.service = :test
 
+  # ActiveStorageの画像解析ジョブが非同期スレッドでDB接続と競合するのを防ぐ
+  config.active_job.queue_adapter = :test
+
   config.action_mailer.perform_caching = false
 
   # Tell Action Mailer not to deliver emails to the real world.
