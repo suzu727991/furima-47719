@@ -12,7 +12,9 @@ class OrderAddress
     validates :postal_code, format: { with: /\A\d{3}-\d{4}\z/, message: 'is invalid. Enter it as follows (e.g. 123-4567)' }
   end
   validates :prefecture_id, numericality: { other_than: 1, message: "can't be blank" }
-  validates :phone_number, format: { with: /\A\d{10,11}\z/, message: 'is invalid. Enter only number' }, if: -> { phone_number.present? }
+  with_options format: { with: /\A\d{10,11}\z/, message: 'is invalid. Enter only number' }, if: -> { phone_number.present? } do
+    validates :phone_number
+  end
 
   def save
     ActiveRecord::Base.transaction do
