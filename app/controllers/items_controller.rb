@@ -2,9 +2,10 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_item, only: [:show, :edit, :update, :destroy]
   before_action :redirect_unless_owner, only: [:edit, :update, :destroy]
+  before_action :redirect_if_sold_out, only: [:edit, :update]
 
   def index
-    @items = Item.order(created_at: :desc)
+    @items = Item.includes(:order).order(created_at: :desc)
   end
 
   def new
@@ -59,5 +60,10 @@ class ItemsController < ApplicationController
 
   def redirect_unless_owner
     redirect_to root_path unless current_user.id == @item.user_id
+  end
+
+  # 売却済み商品は編集不可のためトップページへ返す
+  def redirect_if_sold_out
+    redirect_to root_path if @item.sold_out?
   end
 end
